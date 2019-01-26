@@ -1,0 +1,61 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.step{
+    float: left;
+}
+.box {
+    position: relative;
+    height: 30px;
+    padding: 0 5px; 
+    margin-top: 30px;
+}
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.line {
+    width: 0;
+    display: inline-block;
+    height: 6px;
+    background: #ccc;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    margin-top: -3px;
+}
+.lineGo {
+    width: 0;
+    display: inline-block;
+    height: 6px;
+    background: #409EFF;
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    margin-top: -3px;
+}
+.step-round {
+    display: inline-block;;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    position: relative;
+    background: #ccc;
+    color: #fff;
+    margin-bottom: 10px;
+    z-index: 9;
+}
+.step-explain {
+    font-size: 15px;
+    font-family: '微软雅黑';
+    color: red;
+    display: none;
+}
+.step-round.hasRound {
+    background: #409EFF;
+}

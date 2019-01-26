@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="./css/jquery.step.css">
+    </head>
+    <body>
+        <div class="box clearfix">
+            <span class="line"></span>
+            <span class="lineGo"></span>
+            <div class="step">
+                <div class="step-round">1</div>
+                <div class="step-explain">
+                    <p>2018-05-15 12:38:45</p>
+                    <p>提交成功</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-round">2</div>
+                <div class="step-explain">
+                    <p>2018-05-15 12:50:56s</p>
+                    <p>资料审核中</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-round">3</div>
+                <div class="step-explain">
+                    <p>2018-05-15 14:06:35</p>
+                    <p>审核成功</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-round">4</div>
+                <div class="step-explain">
+                   <p>2018-05-15 15:15:26s</p>
+                   <p>放款成功,请关注您的资金帐户</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="./js/jquery.js"></script>
+    <script type="text/javascript">
+        var defaults = {
+            direction: 'h',
+            textAlign: 'left'
+        }
+        function step (options) {
+            if (!isValid(options)) return;
+            let box = $('.box');
+            // 拿到每个step的宽度
+            let persentW = box.width() / box.find('.step').length;
+            let mydirection = null;
+            if (options.direction === 'h') {
+                mydirection = 'left';
+                // 设置step的宽度
+                box.find('.step').css({
+                    width: persentW + 'px'
+                });
+                // 计算进度条的总长度
+                let boxWidth = persentW * (box.find('.step').length - 1);
+                box.find('.line').css({
+                    width: boxWidth + 'px'
+                })
+            } else {
+                mydirection = 'none';
+            }
+            let step_explain = box.find('.step').find('.step-explain');
+            return step_explain.each(function () {
+                let $this = $(this);
+                $this.parent('.step').css({
+                    'float': mydirection
+                });
+                $this.css({
+                    'text-align': options.textAlign
+                });
+            });
+        }
+        function toStep (num) {
+            if (!num || typeof num != 'number') return;
+            let box = $('.box');
+            let maxNum = box.find('.step').length;
+            if (num > maxNum) num = maxNum;
+            box.find('.step').eq(0).find('.step-round').addClass('hasRound');
+            // 计算需要走的宽度
+            let runWidth;
+            if (num === 4) {
+                runWidth = box.find('.step').eq(0).width() * (num - 1);
+            } else {
+                runWidth = box.find('.step').eq(0).width() * num;
+            }
+            box.find('.lineGo').animate({
+                width: runWidth + 'px'
+            }, 500, () => {
+                let step = box.find('.step');
+                for (let i = 0; i < num; i++) {
+                    if (i === 3) {
+                        step.eq(3).children('.step-round').addClass('hasRound');
+                        step.eq(3).children('.step-explain').fadeIn(1000);
+                        return;
+                    }
+                    step.eq(i).children('.step-round').addClass('hasRound');
+                    step.eq(i).children('.step-explain').fadeIn(1000);
+                }
+            });
+        }
+        function isValid (options) {
+            return !options || (options && typeof options === 'object') ? true : false;
+        }
+        step(defaults);
+        toStep(4);
+</script>
+</html>
